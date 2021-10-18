@@ -1,6 +1,6 @@
 const { NotImplementedError } = require('../extensions/index.js');
 
-const { node } = require('../extensions/list-tree.js');
+const { Node } = require('../extensions/list-tree.js');
 
 /**
 * Implement simple binary search tree according to task description
@@ -9,14 +9,15 @@ const { node } = require('../extensions/list-tree.js');
 module.exports = class BinarySearchTree {
 
   constructor() {
-    this.rootNew = null;
+    this.valRoot = null;
   }
   root() {
-    return this.rootNew;
+    return this.valRoot;
 }
 
   add(data) {
-    this.rootNew = addWithin(this.rootNew, data);
+    this.valRoot = addWithin(this.valRoot, data);
+
     function addWithin(node, data){
       if(!node){
         return new Node(data);
@@ -40,20 +41,21 @@ module.exports = class BinarySearchTree {
     
 
   find(data) {
-    return findNode(this.rootNew, data);
+    return findNode(this.valRoot, data);
+
     function findNode(node,data){
       if(!node) return null;
       if (node.data === data) return node;
           if(data < node.data){
             return findNode(node.left, data);
-          } else if (data > node.data) {
+          } else {
             return findNode(node.right, data);
           } 
         }
 }
 
   remove(data) {
-    this.rootNew = removeNode(this.rootNew, data);
+    this.valRoot = removeNode(this.valRoot, data);
 
 function removeNode (node, data){
   if(!node) return null;
@@ -67,6 +69,7 @@ function removeNode (node, data){
     if (!node.left && !node.right){
     return null;
   }
+}
 
 if (!node.left) {
   node = node.right;
@@ -81,29 +84,31 @@ if(!node.right){
 let minFromRight = node.right;
 while (minFromRight.left){
   minFromRight = minFromRight.left;
-}
+
 node.data = minFromRight.data;
 node.right = removeNode(node.right, minFromRight.data);
 return node;
 }
 }
-  }
-
+}
 
   min() {
-if(!this.rootNew) return null;
-let node = this.rootNew;
+if(!this.valRoot) {
+  return null;
+}
+let node = this.valRoot;
 while(node.left){
   node = node.left;
 }
 return node.data;
 }
-
-
+  
 
   max() {
-    if(!this.rootNew) return null;
-let node = this.rootNew;
+    if(!this.valRoot) {
+      return null;
+    }
+let node = this.valRoot;
 while(node.right){
   node = node.right;
 }
