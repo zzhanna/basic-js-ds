@@ -79,9 +79,9 @@ remove(data) {
 
     let minRightNode = node.right;
     while (minRightNode.left) {
-    minRightNode = minRightNode.left;
-    node.data = minRightNode.data;
+    minRightNode = minRightNode.left;    
   }
+    node.data = minRightNode.data;
     node.right = removeInNode(node.right, minRightNode.data);
     return node;
   }
