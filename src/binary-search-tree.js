@@ -54,52 +54,48 @@ module.exports = class BinarySearchTree {
         }
 }
 
-  remove(data) {
-    this.valRoot = removeNode(this.valRoot, data);
+remove(data) {
+  this.valRoot = removeInNode(this.valRoot, data);
 
-function removeNode (node, data){
-  if(!node) return null;
-  if(data < node.data){
-    node.left = removeNode(node.left, data);
+  function removeInNode(node, data) {
+    if (!node) return null;
+
+    if (data < node.data) {
+      node.left = removeInNode(node.left, data);
+      return node;
+    } else if (data > node.data) {
+      node.right = removeInNode(node.right, data);
+      return node;
+    } else if (data === node.data) {
+      if (!node.left && !node.right) return null;
+    }
+
+    if (!node.left){
+       return node.right;
+    }
+    if (!node.right) {
+      return node.left;
+    }
+
+    let minRightNode = node.right;
+    while (minRightNode.left) {
+    minRightNode = minRightNode.left;
+    node.data = minRightNode.data;
+  }
+    node.right = removeInNode(node.right, minRightNode.data);
     return node;
-  } else if (data > node.data) {
-    node.right =  removeNode(node.right, data);
-    return node;
-  } else if(data === node.data){
-    if (!node.left && !node.right){
-    return null;
   }
 }
 
-if (!node.left) {
-  node = node.right;
-  return node;
-}
 
-if(!node.right){
-  node = node.left;
-  return node;
-}
-
-let minFromRight = node.right;
-while (minFromRight.left){
-  minFromRight = minFromRight.left;
-
-node.data = minFromRight.data;
-node.right = removeNode(node.right, minFromRight.data);
-return node;
-}
-}
-}
 
   min() {
 if(!this.valRoot) {
   return null;
 }
 let node = this.valRoot;
-while(node.left){
+while(node.left)
   node = node.left;
-}
 return node.data;
 }
   
